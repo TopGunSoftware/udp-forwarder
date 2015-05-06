@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>0.2</version>
+    <title>UDP Forwarder for ASP.NET Web API</title>
+    <authors>Brynjar Bragason and Marino Palsson</authors>
+    <owners>Brynjar Bragason and Marino Palsson</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A Logstash forwarder for Web API</description>
+    <releaseNotes>Beta version</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>Logstash WebAPI UDP</tags>
+  </metadata>
+</package>
