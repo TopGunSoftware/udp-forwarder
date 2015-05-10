@@ -1,43 +1,59 @@
 ﻿using System;
+using System.Web.Configuration;
 using UDPForwarder.Logging;
 using Newtonsoft.Json;
 
 namespace UDPForwarder.Services
 {
-    public class LogService : IUsageLoggingService
+    /// <summary>
+    /// The main service in the UDPForwarder library. LogService takes in an instance of a 
+    /// transport service (default is UDP) and uses that service to forward logs to a specified server.
+    /// This is built and tested with Logstash on the receiving end.
+    /// </summary>
+    public class LogService
     {
         private ITransportService transportService;
- 
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="_transportService"></param>
         public LogService(ITransportService _transportService)
         {
             transportService = _transportService;
         }
 
+        /// <summary>
+        /// Tries to forward the log to the transport service. If it is unsuccessful it will log 
+        /// the error to a file specified in the Web.config (FallbackLogPath in AppSettings).
+        /// </summary>
+        /// <param name="info"></param>
         public void Log(LoggingInfo info)
         {
             try
             {
                 string jsonInfo = JsonConvert.SerializeObject(info);
                 transportService.SendLog(jsonInfo);
-                //TODO: This is for debug, remove
-                System.IO.File.AppendAllText("C:\\CentrisTemp\\Log.txt", jsonInfo);
+
             }
             catch (Exception ex)
             {
-                var msg = ex.Message;
-                if (ex.InnerException != null)
+                string logPath = WebConfigurationManager.AppSettings["FallbackLogPath"];
+                if (logPath != null)
                 {
-                    msg += ex.InnerException.Message;
-                    if (ex.InnerException.InnerException != null)
+                    var msg = ex.Message;
+                    if (ex.InnerException != null)
                     {
-                        msg += ex.InnerException.InnerException.Message;
+                        msg += ex.InnerException.Message;
+                        if (ex.InnerException.InnerException != null)
+                        {
+                            msg += ex.InnerException.InnerException.Message;
+                        }
                     }
-                }
 
-                // Try logging to the file system instead...
-                //TODO: Handle exception
-                System.IO.File.AppendAllText("C:\\Temp\\ApiUsageBackupLog.txt", msg);
-                System.IO.File.AppendAllText("C:\\Temp\\ApiUsageBackupLog.txt", info.ToString());
+                    System.IO.File.AppendAllText(logPath, msg);
+                    System.IO.File.AppendAllText(logPath, info.ToString());
+                }
             }
         }
     }

@@ -42,11 +42,6 @@ namespace UDPForwarder.Logging
         public string RequestBody { get; set; }
 
         /// <summary>
-        /// The HTTP body of the Response.
-        /// </summary>
-        public string ResponseBody { get; set; }
-
-        /// <summary>
         /// The username of the user issuing the request,
         /// if any.
         /// </summary>
@@ -100,10 +95,6 @@ namespace UDPForwarder.Logging
 
             stringBuilder.Append("RequestBody: ");
             stringBuilder.Append(RequestBody);
-            stringBuilder.Append(Environment.NewLine);
-
-            stringBuilder.Append("ResponseBody: ");
-            stringBuilder.Append(ResponseBody);
             stringBuilder.Append(Environment.NewLine);
 
             stringBuilder.Append("UserName: ");

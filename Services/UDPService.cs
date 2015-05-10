@@ -20,14 +20,7 @@ namespace UDPForwarder.Services
             var udpClient = new UdpClient(serverIp, serverPort);
             var sendBytes = Encoding.UTF8.GetBytes(info);
 
-            try
-            {
-                udpClient.Send(sendBytes, sendBytes.Length);
-            }
-            catch (Exception e)
-            {
-                //TODO: Handle exception
-            }
+            udpClient.Send(sendBytes, sendBytes.Length);         
         }
     }   
 }

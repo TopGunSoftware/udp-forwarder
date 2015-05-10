@@ -13,13 +13,13 @@ namespace UDPForwarder.Filters
 {
     public class LoggingHandler : DelegatingHandler
     {
-        private readonly IUsageLoggingService _service;
+        private readonly LogService _service;
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="service"></param>
-		public LoggingHandler(IUsageLoggingService service)
+        public LoggingHandler(LogService service)
 		{
 			_service = service;
 		}
@@ -29,14 +29,14 @@ namespace UDPForwarder.Filters
 		/// </summary>
 		/// <param name="innerHandler"></param>
 		/// <param name="service"></param>
-		public LoggingHandler(HttpMessageHandler innerHandler, IUsageLoggingService service)
+        public LoggingHandler(HttpMessageHandler innerHandler, LogService service)
 			: base(innerHandler)
 		{
 			_service = service;
 		}
 
         /// <summary>
-        /// The main method, which gets called for each request.
+        /// This message handler catches all http requests. An instance of LoggingInfo is created and various data from the http request is collected.
         /// </summary>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
@@ -61,6 +61,11 @@ namespace UDPForwarder.Filters
 
         }
 
+        /// <summary>
+        /// Creates an instance of LoggingInfo and feeds into it various information extracted from the http request.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         private LoggingInfo CreateLoggingInfoFromRequest(HttpRequestMessage request)
         {
             var info = new LoggingInfo
@@ -104,19 +109,6 @@ namespace UDPForwarder.Filters
         {
             info.ResponseStatusCode = (int)response.StatusCode;
             info.ResponseStatusMessage = response.ReasonPhrase;
-
-            if (response.Content != null)
-            {
-                response.Content.ReadAsByteArrayAsync()
-                    .ContinueWith(task =>
-                    {
-                        var responseMsg = Encoding.UTF8.GetString(task.Result);
-                        info.ResponseBody = responseMsg;
-                        _service.Log(info);
-                    });
-
-                return;
-            }
 
             _service.Log(info);
         }
