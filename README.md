@@ -1,7 +1,7 @@
 # UDP Forwarder for Web API
 
 ## About ##
-The udp-forwarder is an open source library available as a NuGet package [link] for Web APIs. It grabs http requests sent to the API, creates a rich log event in a JSON format and sends it to a remote log service, like Logstash, via UDP.
+The udp-forwarder is an open source library available as a [NuGet package](https://www.nuget.org/packages/UDPForwarder/) for Web APIs. It grabs http requests sent to the API, creates a rich log event in a JSON format and sends it to a remote log service, like Logstash, via UDP.
 
 ## Usage ##
 To install the udp-forwarder to your WebAPI project: 

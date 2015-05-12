@@ -2,13 +2,14 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>0.2</version>
+    <version>0.1</version>
     <title>UDP Forwarder for ASP.NET Web API</title>
     <authors>Brynjar Bragason and Marino Palsson</authors>
     <owners>Brynjar Bragason and Marino Palsson</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>A Logstash forwarder for Web API</description>
+    <description>The udp-forwarder is an open source library for Web APIs. It grabs http requests sent to the API, creates a rich log event in a JSON format and sends it to a remote log service, like Logstash, via UDP.</description>
     <releaseNotes>Beta version</releaseNotes>
+    <projectUrl>https://github.com/TopGunSoftware/udp-forwarder</projectUrl>
     <copyright>Copyright 2015</copyright>
     <tags>Logstash WebAPI UDP</tags>
   </metadata>
