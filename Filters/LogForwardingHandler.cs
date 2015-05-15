@@ -11,7 +11,7 @@ using Thinktecture.IdentityModel.Extensions;
 
 namespace UDPForwarder.Filters
 {
-    public class LoggingHandler : DelegatingHandler
+    public class LogForwardingHandler : DelegatingHandler
     {
         private readonly LogForwardingService _service;
 
@@ -19,7 +19,7 @@ namespace UDPForwarder.Filters
 		/// Constructor
 		/// </summary>
 		/// <param name="service"></param>
-        public LoggingHandler(LogForwardingService service)
+        public LogForwardingHandler(LogForwardingService service)
 		{
 			_service = service;
 		}
@@ -29,7 +29,7 @@ namespace UDPForwarder.Filters
 		/// </summary>
 		/// <param name="innerHandler"></param>
 		/// <param name="service"></param>
-        public LoggingHandler(HttpMessageHandler innerHandler, LogForwardingService service)
+        public LogForwardingHandler(HttpMessageHandler innerHandler, LogForwardingService service)
 			: base(innerHandler)
 		{
 			_service = service;
