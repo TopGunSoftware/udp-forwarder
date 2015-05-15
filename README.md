@@ -14,7 +14,6 @@ var logService = new LogService(new UDPService(serverIp, serverPort));
 config.MessageHandlers.Add(new LoggingHandler(logService));
 ```
 * Add the following to appSettings of the WebAPI's Web.config file.
-var serverIp = WebConfigurationManager.AppSettings["UdpLogForwarderIP"];
 ```csharp
 <add key="UdpLogForwarderIP" value="0.0.0.0" />
 <add key="UdpLogForwarderPort" value="0000" /> 
