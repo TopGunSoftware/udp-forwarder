@@ -13,13 +13,13 @@ namespace UDPForwarder.Filters
 {
     public class LoggingHandler : DelegatingHandler
     {
-        private readonly LogService _service;
+        private readonly LogForwardingService _service;
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="service"></param>
-        public LoggingHandler(LogService service)
+        public LoggingHandler(LogForwardingService service)
 		{
 			_service = service;
 		}
@@ -29,7 +29,7 @@ namespace UDPForwarder.Filters
 		/// </summary>
 		/// <param name="innerHandler"></param>
 		/// <param name="service"></param>
-        public LoggingHandler(HttpMessageHandler innerHandler, LogService service)
+        public LoggingHandler(HttpMessageHandler innerHandler, LogForwardingService service)
 			: base(innerHandler)
 		{
 			_service = service;

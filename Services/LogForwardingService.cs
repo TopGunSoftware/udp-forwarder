@@ -10,7 +10,7 @@ namespace UDPForwarder.Services
     /// transport service (default is UDP) and uses that service to forward logs to a specified server.
     /// This is built and tested with Logstash on the receiving end.
     /// </summary>
-    public class LogService
+    public class LogForwardingService
     {
         private ITransportService transportService;
 
@@ -18,7 +18,7 @@ namespace UDPForwarder.Services
         /// Constructor
         /// </summary>
         /// <param name="_transportService"></param>
-        public LogService(ITransportService _transportService)
+        public LogForwardingService(ITransportService _transportService)
         {
             transportService = _transportService;
         }
