@@ -54,7 +54,7 @@
     <Compile Include="Logging\LoggingInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ITransportService.cs" />
-    <Compile Include="Services\LogService.cs" />
+    <Compile Include="Services\LogForwardingService.cs" />
     <Compile Include="Services\UDPService.cs" />
   </ItemGroup>
   <ItemGroup>
