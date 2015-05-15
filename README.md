@@ -8,12 +8,18 @@ To install the udp-forwarder to your WebAPI project:
 * Run "Install-Package udp-forwarder" in the Package Manager Console.
 * Add the following to App_Start/WebAPIConfig.cs.
 ```csharp
-var serverIp = "0.0.0.0";
-var serverPort = 0000;
+var serverIp = WebConfigurationManager.AppSettings["UdpLogForwarderIP"];
+var serverPort = Int32.Parse(WebConfigurationManager.AppSettings["UdpLogForwarderPort"]); ;
 var logService = new LogService(new UDPService(serverIp, serverPort));
 config.MessageHandlers.Add(new LoggingHandler(logService));
 ```
-* Edit the serverIP and serverPort variables to match the setup of your log service.
+* Add the following to appSettings of the WebAPI's Web.config file.
+var serverIp = WebConfigurationManager.AppSettings["UdpLogForwarderIP"];
+```csharp
+<add key="UdpLogForwarderIP" value="0.0.0.0" />
+<add key="UdpLogForwarderPort" value="0000" /> 
+```
+* Edit the UdpLogForwarderIP and UdpLogForwarderPort values to match the setup of your log service.
 * OPTIONAL: If for some reason the forwarder cannot send the log to the remote log service, then that log is dismissed. This is the default configuration but there is an optional feature to log these instances to a text file. To enable this feature, add the following key to appSettings of the WebAPI's Web.config file, where the value points to the desired directory where the logs should be stored.
 ```csharp
 <add key="FallbackLogPath" value="c:/logs">
