@@ -55,10 +55,10 @@ namespace UDPForwarder.Filters
                 // Extract the response logging info then persist the information
                 stopWatch.Stop();
                 info.Elapsed = stopWatch.ElapsedMilliseconds;
-                LogResponseLoggingInfo(response, info);
+                info.ResponseStatusCode = (int)response.StatusCode;
+                _service.Log(info);
                 return response;
             }, cancellationToken);
-
         }
 
         /// <summary>
@@ -88,30 +88,9 @@ namespace UDPForwarder.Filters
 
             ExtractMessageHeadersIntoLoggingInfo(info, request.Headers.ToList());
 
-            if (request.Content != null)
-            {
-                request.Content.ReadAsByteArrayAsync()
-                    .ContinueWith(task =>
-                    {
-                        // TODO: we might want to make this more robust.
-                        // As it stands, it is possible that the request
-                        // has been dealt with and our actual logging method
-                        // may have been executed, when we are finally able
-                        // to write the RequestBody property.
-                        info.RequestBody = Encoding.UTF8.GetString(task.Result);
-                    });
-
-            }
             return info;
         }
 
-        private void LogResponseLoggingInfo(HttpResponseMessage response, LoggingInfo info)
-        {
-            info.ResponseStatusCode = (int)response.StatusCode;
-            info.ResponseStatusMessage = response.ReasonPhrase;
-
-            _service.Log(info);
-        }
 
         private void ExtractMessageHeadersIntoLoggingInfo(LoggingInfo info, List<KeyValuePair<string, IEnumerable<string>>> headers)
         {
